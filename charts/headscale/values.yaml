@@ -132,7 +132,7 @@ volumes:
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
- - name: foo
+ - name: headscale-config
    mountPath: "/etc/headscale/config.yaml"
    readOnly: true
 

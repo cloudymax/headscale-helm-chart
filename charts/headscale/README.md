@@ -1,6 +1,6 @@
 # headscale
 
-![Version: 0.0.0](https://img.shields.io/badge/Version-0.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.22.3](https://img.shields.io/badge/AppVersion-0.22.3-informational?style=flat-square)
+![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.22.3](https://img.shields.io/badge/AppVersion-0.22.3-informational?style=flat-square)
 
 Install headscale with helm
 
@@ -66,7 +66,7 @@ Install headscale with helm
 | tls_letsencrypt_listen | string | `":http"` |  |
 | tolerations | list | `[]` |  |
 | volumeMounts[0].mountPath | string | `"/etc/headscale/config.yaml"` |  |
-| volumeMounts[0].name | string | `"foo"` |  |
+| volumeMounts[0].name | string | `"headscale-config"` |  |
 | volumeMounts[0].readOnly | bool | `true` |  |
 | volumes[0].configMap.defaultMode | int | `420` |  |
 | volumes[0].configMap.name | string | `"headscale-config"` |  |
