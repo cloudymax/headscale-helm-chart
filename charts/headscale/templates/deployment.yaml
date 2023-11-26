@@ -37,6 +37,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
+            - "/bin/sh"
+            - "-ec"
             - |
               headscale serve
           ports:
