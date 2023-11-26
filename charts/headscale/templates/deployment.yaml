@@ -41,6 +41,9 @@ spec:
             - "-ec"
             - |
               headscale serve
+          env:
+            - name: "HEADSCALE_PRIVATE_KEY_PATH"
+              value: /var/lib/headscale/private.key
           ports:
             - name: server
               containerPort: {{ .Values.serverService.port }}
