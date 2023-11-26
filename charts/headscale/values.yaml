@@ -8,7 +8,7 @@ image:
   repository: headscale/headscale
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.22.3"
+  tag: ""
 
 # The url the service will connect to
 server_url: http://127.0.0.1:8080

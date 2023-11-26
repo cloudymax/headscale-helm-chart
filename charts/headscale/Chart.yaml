@@ -1,5 +1,11 @@
 apiVersion: v2
 name: headscale
 description: Install headscale with helm
+
+type: application
 version: "0.0.0"
-appVersion: "1.16.0"
+appVersion: "0.22.3"
+
+maintainers:
+  - name: "cloudymax"
+    email: "emax@cloudydev.net"

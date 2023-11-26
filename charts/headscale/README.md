@@ -1,8 +1,14 @@
 # headscale
 
-![Version: 0.0.0](https://img.shields.io/badge/Version-0.0.0-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
+![Version: 0.0.0](https://img.shields.io/badge/Version-0.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.22.3](https://img.shields.io/badge/AppVersion-0.22.3-informational?style=flat-square)
 
 Install headscale with helm
+
+## Maintainers
+
+| Name | Email | Url |
+| ---- | ------ | --- |
+| cloudymax | <emax@cloudydev.net> |  |
 
 ## Values
 
@@ -20,7 +26,7 @@ Install headscale with helm
 | grpc_listen_addr | string | `"127.0.0.1:50443"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"headscale/headscale"` |  |
-| image.tag | string | `"0.22.3"` |  |
+| image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.className | string | `""` |  |
