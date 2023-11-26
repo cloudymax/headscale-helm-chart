@@ -127,8 +127,8 @@ autoscaling:
 # Additional volumes on the output Deployment definition.
 volumes:
 - configMap:
-     defaultMode: 420
-     name: headscale-config
+  defaultMode: 420
+  name: headscale-config
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
