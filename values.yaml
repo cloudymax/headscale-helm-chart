@@ -5,10 +5,44 @@
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: headscale/headscale
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "0.22.3"
+
+# The url the service will connect to
+server_url: http://127.0.0.1:8080
+
+# Address to listen to / bind to on the server
+listen_addr: 127.0.0.1:8080
+
+# Address to listen to /metrics
+metrics_listen_addr: 127.0.0.1:9090
+
+# Address to listen for gRPC.
+grpc_listen_addr: 127.0.0.1:50443
+
+# Allow the gRPC admin interface to run in INSECURE mode.
+grpc_allow_insecure: false
+
+# TLS configuration
+# URL to ACME directory
+acme_url: https://acme-v02.api.letsencrypt.org/directory
+# Email to register with ACME provider
+acme_email: ""
+# Domain name to request a TLS certificate for:
+tls_letsencrypt_hostname: ""
+# Path to store certificates
+tls_letsencrypt_cache_dir: /var/lib/headscale/cache
+# Type of ACME challenge to use
+tls_letsencrypt_challenge_type: HTTP-01
+# When HTTP-01 challenge is chosen, letsencrypt must set up a
+# verification endpoint, and it will be listening on:
+# :http = port 80
+tls_letsencrypt_listen: ":http"
+## Use already defined certificates
+tls_cert_path: ""
+tls_key_path: ""
 
 imagePullSecrets: []
 nameOverride: ""
@@ -39,9 +73,21 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-service:
+persistence:
+  accessMode: ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  existingClaim: ""
+  storageClassName: ""
+
+serverService:
   type: ClusterIP
-  port: 80
+  port: 8080
+
+metricsService:
+  type: ClusterIP
+  port: 9090
 
 ingress:
   enabled: false
@@ -79,17 +125,16 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
+volumes:
+- configMap:
+     defaultMode: 420
+     name: headscale-config
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+volumeMounts:
+ - name: foo
+   mountPath: "/etc/headscale/config.yaml"
+   readOnly: true
 
 nodeSelector: {}
 
