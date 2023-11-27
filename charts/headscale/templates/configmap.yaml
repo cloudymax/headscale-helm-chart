@@ -43,8 +43,8 @@ data:
     # db_pass: bar
     # db_ssl: false
     acme_url: https://acme-v02.api.letsencrypt.org/directory
-    acme_email: ""
-    tls_letsencrypt_hostname: ""
+    acme_email: {{ .Values.acme_email }}
+    tls_letsencrypt_hostname: {{ .Values.tls_letsencrypt_hostname }}
     tls_letsencrypt_cache_dir: /var/lib/headscale/cache
     tls_letsencrypt_challenge_type: HTTP-01
     tls_letsencrypt_listen: ":http"
@@ -52,7 +52,7 @@ data:
     tls_key_path: ""
     log:
       format: text
-      level: info
+      level: debug
     acl_policy_path: ""
     dns_config:
       override_local_dns: true

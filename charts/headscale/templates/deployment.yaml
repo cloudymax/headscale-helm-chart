@@ -48,8 +48,11 @@ spec:
             - name: server
               containerPort: {{ .Values.serverService.port }}
               protocol: TCP
-            - name: api
+            - name: metrics
               containerPort: {{ .Values.metricsService.port }}
+              protocol: TCP
+            - name: grpc
+              containerPort: {{ .Values.grpcService.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
