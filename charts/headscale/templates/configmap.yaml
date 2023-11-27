@@ -10,6 +10,8 @@ data:
     metrics_listen_addr: {{ .Values.metrics_listen_addr }}
     grpc_listen_addr: {{ .Values.grpc_listen_addr }}
     grpc_allow_insecure: {{ .Values.grpc_allow_insecure }}
+
+    private_key_path: /var/lib/headscale/private.key
     noise:
       private_key_path: /var/lib/headscale/noise_private.key
     ip_prefixes:
@@ -20,9 +22,7 @@ data:
         enabled: false
         region_id: 999
         region_code: "headscale"
-        region_name: "Headscale Embedded DERP"
         stun_listen_addr: "0.0.0.0:3478"
-        private_key_path: /var/lib/headscale/derp_server_private.key
       urls:
         - https://controlplane.tailscale.com/derpmap/default
       paths: []
@@ -33,8 +33,6 @@ data:
     node_update_check_interval: 10s
     db_type: sqlite3
     db_path: /var/lib/headscale/db.sqlite
-    # # Postgres config
-    # If using a Unix socket to connect to Postgres, set the socket path in the 'host' field and leave 'port' blank.
     # db_type: postgres
     # db_host: localhost
     # db_port: 5432
@@ -55,37 +53,19 @@ data:
       level: debug
     acl_policy_path: ""
     dns_config:
-      override_local_dns: true
+      override_local_dns: false
       nameservers:
         - 1.1.1.1
+        - 8.8.8.8
       domains: []
       # extra_records:
       #   - name: "grafana.myvpn.example.com"
       #     type: "A"
       #     value: "100.64.0.3"
       magic_dns: true
-      base_domain: {{ .Values.base_domain }}
+      base_domain: buildstar.online
     unix_socket: /var/run/headscale/headscale.sock
     unix_socket_permission: "0770"
-    # oidc:
-    #   only_start_if_oidc_is_available: true
-    #   issuer: "https://your-oidc.issuer.com/path"
-    #   client_id: "your-oidc-client-id"
-    #   client_secret: "your-oidc-client-secret"
-    #   client_secret_path: "${CREDENTIALS_DIRECTORY}/oidc_client_secret"
-    #   expiry: 180d
-    #   use_expiry_from_token: false
-    #   scope: ["openid", "profile", "email", "custom"]
-    #   extra_params:
-    #     domain_hint: example.com
-    #   allowed_domains:
-    #     - example.com
-    #   allowed_groups:
-    #     - /headscale
-    #   allowed_users:
-    #     - alice@example.com
-    #   user: `first-name.last-name.example.com`
-    #   strip_email_domain: true
     logtail:
       enabled: false
     randomize_client_port: false
