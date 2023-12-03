@@ -39,4 +39,12 @@ spec:
             name: headscale-server-service
             port:
               number: 8080
+      - path: /admin
+        pathType: Prefix
+        backend:
+          service:
+            name: milliner-service
+            port:
+              number: 3030
+
 {{- end }}
