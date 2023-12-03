@@ -19,7 +19,7 @@ metadata:
 spec:
   selector:
     app.kubernetes.io/name: headscale
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - port: 3030
       targetPort: 3030
