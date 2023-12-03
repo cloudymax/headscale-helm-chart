@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: headscale-server
+  labels:
+    app.kubernetes.io/name: headscale
+spec:
+  containers:
+  - name: headscale-server
+    image: ubuntu
+    command:
+      - "/bin/sh"
+      - "-ec"
+      - |
+        apt-get update && apt-get install -y wget
+        wget https://github.com/juanfont/headscale/releases/download/v0.22.3/headscale_0.22.3_linux_amd64.deb
+        apt-get install -f ./headscale_0.22.3_linux_amd64.deb
+        cp /config-file/config.yaml /etc/headscale/config.yaml
+        mkdir -p /var/run/headscale
+        headscale serve
+    ports:
+    - containerPort: 8080
+      name: server
+    - containerPort: 9090
+      name: metrics
+    volumeMounts:
+      - mountPath: /config-file
+        name: headscale-config
+      - mountPath: /var/lib/headscale/
+        name: headscale-db
+  volumes:
+    - configMap:
+        items:
+        - key: config.yaml
+          path: config.yaml
+        name: headscale-config
+      name: headscale-config
+    - name: headscale-db
+      persistentVolumeClaim:
+        claimName: headscale-db
+  nodeSelector:
+    kubernetes.io/hostname: gpunode

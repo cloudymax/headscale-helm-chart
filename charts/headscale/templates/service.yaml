@@ -1,31 +1,26 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: headscale-server
-  labels:
-    {{- include "headscale.labels" . | nindent 4 }}
+  name: headscale-server-service
 spec:
-  type: {{ .Values.serverService.type }}
+  selector:
+    app.kubernetes.io/name: headscale
+  type: ClusterIP
   ports:
-    - port: {{ .Values.serverService.port }}
+    - port: 8080
       targetPort: 8080
       protocol: TCP
-      name: server
-  selector:
-    {{- include "headscale.selectorLabels" . | nindent 4 }}
+      name: headscale-server
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: headscale-metrics
-  labels:
-    {{- include "headscale.labels" . | nindent 4 }}
+  name: headscale-metrics-service
 spec:
-  type: {{ .Values.metricsService.type }}
+  selector:
+    app.kubernetes.io/name: headscale
+  type: ClusterIP
   ports:
-    - port:  {{ .Values.metricsService.port }}
+    - port: 9090
       targetPort: 9090
       protocol: TCP
-      name: metrics
-  selector:
-    {{- include "headscale.selectorLabels" . | nindent 4 }}
