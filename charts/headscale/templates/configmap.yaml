@@ -8,65 +8,26 @@ data:
     server_url: {{ .Values.server_url }}
     listen_addr: {{ .Values.listen_addr }}
     metrics_listen_addr: {{ .Values.metrics_listen_addr }}
-    grpc_listen_addr: {{ .Values.grpc_listen_addr }}
-    grpc_allow_insecure: {{ .Values.grpc_allow_insecure }}
-
     private_key_path: /var/lib/headscale/private.key
     noise:
       private_key_path: /var/lib/headscale/noise_private.key
     ip_prefixes:
-      - fd7a:115c:a1e0::/48
       - 100.64.0.0/10
-    derp:
-      server:
-        enabled: false
-        region_id: 999
-        region_code: "headscale"
-        stun_listen_addr: "0.0.0.0:3478"
-      urls:
-        - https://controlplane.tailscale.com/derpmap/default
-      paths: []
-      auto_update_enabled: true
-      update_frequency: 24h
-    disable_check_updates: false
-    ephemeral_node_inactivity_timeout: 30m
-    node_update_check_interval: 10s
+    disable_check_updates: true
     db_type: sqlite3
     db_path: /var/lib/headscale/db.sqlite
-    # db_type: postgres
-    # db_host: localhost
-    # db_port: 5432
-    # db_name: headscale
-    # db_user: foo
-    # db_pass: bar
-    # db_ssl: false
-    acme_url: https://acme-v02.api.letsencrypt.org/directory
-    acme_email: {{ .Values.acme_email }}
-    tls_letsencrypt_hostname: {{ .Values.tls_letsencrypt_hostname }}
-    tls_letsencrypt_cache_dir: /var/lib/headscale/cache
-    tls_letsencrypt_challenge_type: HTTP-01
-    tls_letsencrypt_listen: ":http"
     tls_cert_path: ""
     tls_key_path: ""
     log:
       format: text
       level: debug
-    acl_policy_path: ""
     dns_config:
-      override_local_dns: false
+      override_local_dns: true
       nameservers:
         - 1.1.1.1
-        - 8.8.8.8
-      domains: []
-      # extra_records:
-      #   - name: "grafana.myvpn.example.com"
-      #     type: "A"
-      #     value: "100.64.0.3"
+        - 1.0.0.1
       magic_dns: true
       base_domain: buildstar.online
-    unix_socket: /var/run/headscale/headscale.sock
-    unix_socket_permission: "0770"
     logtail:
       enabled: false
-    randomize_client_port: false
 

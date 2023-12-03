@@ -11,7 +11,7 @@ image:
   tag: ""
 
 # The url the service will connect to
-server_url: https://0.0.0.0:8080
+server_url: https://hs.buildstar.online
 
 # Address to listen to / bind to on the server
 listen_addr: 0.0.0.0:8080
@@ -19,28 +19,7 @@ listen_addr: 0.0.0.0:8080
 # Address to listen to /metrics
 metrics_listen_addr: 0.0.0.0:9090
 
-# Address to listen for gRPC.
-grpc_listen_addr: 0.0.0.0:50443
-
-# Allow the gRPC admin interface to run in INSECURE mode.
-grpc_allow_insecure: true
-
-# TLS configuration
-# URL to ACME directory
-acme_url: https://acme-v02.api.letsencrypt.org/directory
-# Email to register with ACME provider
-acme_email: ""
-# Domain name to request a TLS certificate for:
-tls_letsencrypt_hostname: ""
-# Path to store certificates
-tls_letsencrypt_cache_dir: /var/lib/headscale/cache
-# Type of ACME challenge to use
-tls_letsencrypt_challenge_type: HTTP-01
-# When HTTP-01 challenge is chosen, letsencrypt must set up a
-# verification endpoint, and it will be listening on:
-# :http = port 80
-tls_letsencrypt_listen: ":http"
-## Use already defined certificates
+# TLS cert paths (optional)
 tls_cert_path: ""
 tls_key_path: ""
 
@@ -63,21 +42,13 @@ podAnnotations: {}
 podLabels: {}
 
 podSecurityContext: {}
-  # fsGroup: 2000
-
 securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
 
 persistence:
   accessMode: ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 1Gi
   existingClaim: ""
   storageClassName: "local-path"
 
@@ -86,20 +57,33 @@ serverService:
   port: 8080
 
 metricsService:
-  type: LoadBalancer
-  port: 9090
-
-grpcService:
   type: ClusterIP
-  port: 8443
+  port: 9090
 
 ingress:
   enabled: true
   className: "nginx"
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-staging"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/server-snippets: |
+      location / {
+      proxy_pass http://85.10.207.22:80;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection $connection_upgrade;
+          proxy_set_header Host $server_name;
+          proxy_redirect http:// https://;
+          proxy_buffering off;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+          add_header Strict-Transport-Security "max-age=15552000; includeSubDomains" always;
+      }
   hosts:
-    - host: headscale.example.com
+    - host: hs.buildstar.online
       paths:
         - path: /
           pathType: Prefix
@@ -111,7 +95,7 @@ ingress:
   tls:
   - secretName: headscale-tls
     hosts:
-      - headscale.example.com
+      - hs.buildstar.online
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
