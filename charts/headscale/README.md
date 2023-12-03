@@ -1,6 +1,6 @@
 # headscale
 
-![Version: 0.0.1](https://img.shields.io/badge/Version-0.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.22.3](https://img.shields.io/badge/AppVersion-0.22.3-informational?style=flat-square)
+![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.22.3](https://img.shields.io/badge/AppVersion-0.22.3-informational?style=flat-square)
 
 Install headscale with helm
 
@@ -14,37 +14,40 @@ Install headscale with helm
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| acme_email | string | `""` |  |
-| acme_url | string | `"https://acme-v02.api.letsencrypt.org/directory"` |  |
 | affinity | object | `{}` |  |
 | autoscaling.enabled | bool | `false` |  |
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | fullnameOverride | string | `""` |  |
-| grpc_allow_insecure | bool | `false` |  |
-| grpc_listen_addr | string | `"127.0.0.1:50443"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"headscale/headscale"` |  |
 | image.tag | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
-| ingress.annotations | object | `{}` |  |
-| ingress.className | string | `""` |  |
-| ingress.enabled | bool | `false` |  |
-| ingress.hosts[0].host | string | `"chart-example.local"` |  |
+| ingress.annotations."cert-manager.io/cluster-issuer" | string | `"letsencrypt-prod"` |  |
+| ingress.annotations."nginx.ingress.kubernetes.io/proxy-read-timeout" | string | `"3600"` |  |
+| ingress.annotations."nginx.ingress.kubernetes.io/proxy-send-timeout" | string | `"3600"` |  |
+| ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/"` |  |
+| ingress.annotations."nginx.ingress.kubernetes.io/server-snippets" | string | `"location / {\nproxy_pass http://85.10.207.22:80;\n    proxy_http_version 1.1;\n    proxy_set_header Upgrade $http_upgrade;\n    proxy_set_header Connection $connection_upgrade;\n    proxy_set_header Host $server_name;\n    proxy_redirect http:// https://;\n    proxy_buffering off;\n    proxy_set_header X-Real-IP $remote_addr;\n    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n    proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;\n    add_header Strict-Transport-Security \"max-age=15552000; includeSubDomains\" always;\n}\n"` |  |
+| ingress.className | string | `"nginx"` |  |
+| ingress.enabled | bool | `true` |  |
+| ingress.hosts[0].host | string | `"hs.buildstar.online"` |  |
+| ingress.hosts[0].paths[0].backend.service.name | string | `"headscale-server"` |  |
+| ingress.hosts[0].paths[0].backend.service.port.number | int | `8080` |  |
 | ingress.hosts[0].paths[0].path | string | `"/"` |  |
-| ingress.hosts[0].paths[0].pathType | string | `"ImplementationSpecific"` |  |
-| ingress.tls | list | `[]` |  |
-| listen_addr | string | `"127.0.0.1:8080"` |  |
+| ingress.hosts[0].paths[0].pathType | string | `"Prefix"` |  |
+| ingress.tls[0].hosts[0] | string | `"hs.buildstar.online"` |  |
+| ingress.tls[0].secretName | string | `"headscale-tls"` |  |
+| listen_addr | string | `"0.0.0.0:8080"` |  |
 | metricsService.port | int | `9090` |  |
 | metricsService.type | string | `"ClusterIP"` |  |
-| metrics_listen_addr | string | `"127.0.0.1:9090"` |  |
+| metrics_listen_addr | string | `"0.0.0.0:9090"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | persistence.accessMode | string | `"ReadWriteOnce"` |  |
 | persistence.existingClaim | string | `""` |  |
-| persistence.resources.requests.storage | string | `"10Gi"` |  |
-| persistence.storageClassName | string | `""` |  |
+| persistence.resources.requests.storage | string | `"1Gi"` |  |
+| persistence.storageClassName | string | `"local-path"` |  |
 | podAnnotations | object | `{}` |  |
 | podLabels | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
@@ -53,17 +56,13 @@ Install headscale with helm
 | securityContext | object | `{}` |  |
 | serverService.port | int | `8080` |  |
 | serverService.type | string | `"ClusterIP"` |  |
-| server_url | string | `"http://127.0.0.1:8080"` |  |
+| server_url | string | `"https://hs.buildstar.online"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.automount | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | tls_cert_path | string | `""` |  |
 | tls_key_path | string | `""` |  |
-| tls_letsencrypt_cache_dir | string | `"/var/lib/headscale/cache"` |  |
-| tls_letsencrypt_challenge_type | string | `"HTTP-01"` |  |
-| tls_letsencrypt_hostname | string | `""` |  |
-| tls_letsencrypt_listen | string | `":http"` |  |
 | tolerations | list | `[]` |  |
 | volumeMounts[0].mountPath | string | `"/etc/headscale"` |  |
 | volumeMounts[0].name | string | `"headscale-config"` |  |
