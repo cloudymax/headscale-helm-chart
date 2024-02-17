@@ -49,5 +49,3 @@ spec:
     - name: milliner-db
       persistentVolumeClaim:
         claimName: milliner-db
-  nodeSelector:
-    kubernetes.io/hostname: gpunode
