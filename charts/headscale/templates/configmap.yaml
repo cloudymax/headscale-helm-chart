@@ -31,3 +31,29 @@ data:
     logtail:
       enabled: false
 
+    oidc:
+      only_start_if_oidc_is_available: false
+      issuer: {{ .Values.oidc.issuer }}
+      client_id: {{ .Values.oidc.client_id }}
+      client_secret: {{ .Values.oidc.client_secret }}
+      
+      # Alternatively, set `client_secret_path` to read the secret from the file.
+      # It resolves environment variables, making integration to systemd's
+      # `LoadCredential` straightforward:
+      # client_secret_path: "${CREDENTIALS_DIRECTORY}/oidc_client_secret"
+      # client_secret and client_secret_path are mutually exclusive.
+      
+      # expiry: 180d
+      # use_expiry_from_token: false
+      # scope: ["openid", "profile", "email", "custom"]
+
+      # extra_params:
+      # domain_hint: example.com
+      # allowed_domains:
+      #   - example.com
+      # # Note: Groups from keycloak have a leading '/'
+      # allowed_groups:
+      #   - /headscale
+      # allowed_users:
+      #   - alice@example.com
+      # strip_email_domain: true

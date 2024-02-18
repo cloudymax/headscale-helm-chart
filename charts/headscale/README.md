@@ -1,6 +1,6 @@
 # headscale
 
-![Version: 0.0.6](https://img.shields.io/badge/Version-0.0.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.22.3](https://img.shields.io/badge/AppVersion-0.22.3-informational?style=flat-square)
+![Version: 0.0.7](https://img.shields.io/badge/Version-0.0.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.22.3](https://img.shields.io/badge/AppVersion-0.22.3-informational?style=flat-square)
 
 Install headscale with helm
 
@@ -45,6 +45,9 @@ Install headscale with helm
 | metrics_listen_addr | string | `"0.0.0.0:9090"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
+| oidc.client_id | string | `"your-oidc-client-id"` |  |
+| oidc.client_secret | string | `"your-oidc-client-secret"` |  |
+| oidc.issuer | string | `"https://your-oidc.issuer.com/path"` |  |
 | persistence.accessMode | string | `"ReadWriteOnce"` |  |
 | persistence.existingClaim | string | `""` |  |
 | persistence.resources.requests.storage | string | `"1Gi"` |  |

@@ -12,6 +12,11 @@ image:
 
 domain: hs.buildstar.online
 
+oidc:
+  issuer: "https://your-oidc.issuer.com/path"
+  client_id: "your-oidc-client-id"
+  client_secret: "your-oidc-client-secret"
+
 # Address to listen to / bind to on the server
 listen_addr: 0.0.0.0:8080
 
