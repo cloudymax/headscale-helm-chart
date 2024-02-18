@@ -5,7 +5,7 @@ metadata:
 data:
   config.yaml: |
     ---
-    server_url: {{ .Values.server_url }}
+    server_url: https://{{ .Values.server_url }}
     listen_addr: {{ .Values.listen_addr }}
     metrics_listen_addr: {{ .Values.metrics_listen_addr }}
     private_key_path: /var/lib/headscale/private.key

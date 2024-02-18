@@ -15,20 +15,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: milliner-service
-spec:
-  selector:
-    app.kubernetes.io/name: headscale
-  type: LoadBalancer
-  ports:
-    - port: 3030
-      targetPort: 3030
-      protocol: TCP
-      name: milliner-server
----
-apiVersion: v1
-kind: Service
-metadata:
   name: headscale-metrics-service
 spec:
   selector:
