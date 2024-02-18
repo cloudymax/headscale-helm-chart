@@ -10,7 +10,8 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
-domain: hs.buildstar.online
+domain: hs.buildstars.online
+baseDomain: buildstars.online
 
 oidc:
   issuer: "https://your-oidc.issuer.com/path"

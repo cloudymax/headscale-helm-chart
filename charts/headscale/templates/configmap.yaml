@@ -5,7 +5,7 @@ metadata:
 data:
   config.yaml: |
     ---
-    server_url: https://{{ .Values.server_url }}
+    server_url: https://{{ .Values.domain }}
     listen_addr: {{ .Values.listen_addr }}
     metrics_listen_addr: {{ .Values.metrics_listen_addr }}
     private_key_path: /var/lib/headscale/private.key
@@ -27,7 +27,7 @@ data:
         - 1.1.1.1
         - 1.0.0.1
       magic_dns: true
-      base_domain: buildstar.online
+      base_domain: {{ .Values.baseDomain }}
     logtail:
       enabled: false
 
@@ -44,11 +44,11 @@ data:
       # client_secret_path: "${CREDENTIALS_DIRECTORY}/oidc_client_secret"
       # client_secret and client_secret_path are mutually exclusive.
       
-      # expiry: 180d
-      # use_expiry_from_token: false
+      expiry: 180d
+      use_expiry_from_token: false
 
-      # extra_params:
-      # domain_hint: example.com
+      extra_params:
+        domain_hint: buildstars.online
       # allowed_domains:
       #   - example.com
       # # Note: Groups from keycloak have a leading '/'
