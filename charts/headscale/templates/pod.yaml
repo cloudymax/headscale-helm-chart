@@ -28,14 +28,6 @@ spec:
         name: headscale-config
       - mountPath: /var/lib/headscale/
         name: headscale-db
-  - name: milliner
-    image: jpressler/milliner:latest
-    ports:
-    - containerPort: 3030
-      name: server
-    volumeMounts:
-      - mountPath: /home/anvil/anvil_data
-        name: milliner-db
   volumes:
     - configMap:
         items:
@@ -46,6 +38,3 @@ spec:
     - name: headscale-db
       persistentVolumeClaim:
         claimName: headscale-db
-    - name: milliner-db
-      persistentVolumeClaim:
-        claimName: milliner-db

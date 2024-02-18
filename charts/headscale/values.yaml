@@ -64,7 +64,7 @@ ingress:
   enabled: true
   className: "nginx"
   annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    cert-manager.io/cluster-issuer: "letsencrypt-staging"
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
@@ -83,7 +83,7 @@ ingress:
           add_header Strict-Transport-Security "max-age=15552000; includeSubDomains" always;
       }
   hosts:
-    - host: hs.buildstar.online
+    - host: hs.buildstars.online
       paths:
         - path: /
           pathType: Prefix
@@ -95,7 +95,7 @@ ingress:
   tls:
   - secretName: headscale-tls
     hosts:
-      - hs.buildstar.online
+      - hs.buildstars.online
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
