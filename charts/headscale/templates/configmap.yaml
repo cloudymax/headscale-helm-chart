@@ -35,8 +35,9 @@ data:
       only_start_if_oidc_is_available: false
       issuer: {{ .Values.oidc.issuer }}
       client_id: {{ .Values.oidc.client_id }}
-      client_secret: {{ .Values.oidc.client_secret }}
-      
+      client_secret: {{ .Values.oidc.client_secret }} 
+      scope: ["openid", "profile", "email", "custom"]
+
       # Alternatively, set `client_secret_path` to read the secret from the file.
       # It resolves environment variables, making integration to systemd's
       # `LoadCredential` straightforward:
@@ -45,7 +46,6 @@ data:
       
       # expiry: 180d
       # use_expiry_from_token: false
-      # scope: ["openid", "profile", "email", "custom"]
 
       # extra_params:
       # domain_hint: example.com

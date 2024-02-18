@@ -3,7 +3,7 @@ name: headscale
 description: Install headscale with helm
 
 type: application
-version: "0.0.8"
+version: "0.0.9"
 appVersion: "0.22.3"
 
 maintainers:
