@@ -10,8 +10,7 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
-# The url the service will connect to
-server_url: https://hs.buildstar.online
+domain: hs.buildstar.online
 
 # Address to listen to / bind to on the server
 listen_addr: 0.0.0.0:8080

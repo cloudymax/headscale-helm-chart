@@ -3,18 +3,18 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: headscale-server-ingress
+  {{- with .Values.ingress.annotations }}
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-staging
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - "hs.buildstar.online"
-      secretName: milliner-tls
+        - {{ .Values.domain }}
+      secretName: headscale-tls
   rules:
-  - host: "hs.buildstar.online"
+  - host: {{ .Values.domain }}
     http:
       paths:
       - path: /
@@ -24,12 +24,4 @@ spec:
             name: headscale-server-service
             port:
               number: 8080
-      - path: /admin
-        pathType: Prefix
-        backend:
-          service:
-            name: milliner-service
-            port:
-              number: 3030
-
 {{- end }}
