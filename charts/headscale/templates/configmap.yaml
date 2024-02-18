@@ -36,7 +36,7 @@ data:
       issuer: {{ .Values.oidc.issuer }}
       client_id: {{ .Values.oidc.client_id }}
       client_secret: {{ .Values.oidc.client_secret }} 
-      scope: ["openid", "profile", "email", "custom"]
+      scope: {{ .Values.oidc.scope }}
 
       # Alternatively, set `client_secret_path` to read the secret from the file.
       # It resolves environment variables, making integration to systemd's
