@@ -3,6 +3,19 @@ entries:
   headscale:
   - apiVersion: v2
     appVersion: 0.22.3
+    created: "2024-02-18T20:30:37.910359758Z"
+    description: Install headscale with helm
+    digest: 0f1fe0512706587d577e8bf022b737fd25840855d5e96a0b25b0fdd11695ef2c
+    maintainers:
+    - email: emax@cloudydev.net
+      name: cloudymax
+    name: headscale
+    type: application
+    urls:
+    - https://github.com/small-hack/headscale-helm-chart/releases/download/headscale-0.0.10/headscale-0.0.10.tgz
+    version: 0.0.10
+  - apiVersion: v2
+    appVersion: 0.22.3
     created: "2024-02-18T20:13:49.259741478Z"
     description: Install headscale with helm
     digest: d9ab48c661b335e75b26fc466743e5332a7fd71acc8f3f69cee7dc1df02d14ee
@@ -114,4 +127,4 @@ entries:
     urls:
     - https://github.com/cloudymax/headscale-helm-chart/releases/download/headscale-0.0.0/headscale-0.0.0.tgz
     version: 0.0.0
-generated: "2024-02-18T20:13:49.259781232Z"
+generated: "2024-02-18T20:30:37.910411284Z"
